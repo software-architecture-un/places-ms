@@ -4,7 +4,7 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: Microservice for ScoreResources
-  description: Nodejs + MongoDB
+  description: Nodejs + NodeJS
   license:
     name: Software Architecture 2018-II
 host: 192.168.99.101:5000

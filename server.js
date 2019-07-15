@@ -1,13 +1,29 @@
 var express = require('express'),
   app = express(),
   port = process.env.PORT || 5000,
-  mongoose = require('mongoose'),
-  Task = require('./api/models/todoListModel'),
+  mysql = require('mysql'),
   bodyParser = require('body-parser');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://scoreresources-db/dummy-app');
+  mysql.Promise = global.Promise;
 
+  var con = mysql.createConnection({
+    host     : 'places-db',
+    database : 'places-db',
+    user     : 'sa',
+    password : '123',
+  });
+  
+  con.connect(function(err) {
+    if (err) throw err;
+    else {
+      console.log("Connected!");
+      var sql = "CREATE TABLE IF NOT EXISTS places (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), description VARCHAR(255), latitude DOUBLE(20, 15), longitude DOUBLE(20, 15), user_id INT(10))";
+      con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Table created");
+      });
+    }
+  });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
