@@ -48,6 +48,7 @@ exports.read_number_places_by_user_id = function (req, res) {
 
 exports.create_a_place = function (req, res) {
   var newPlace = {
+    _id: 0,
     name: req.body.name,
     description: req.body.description,
     latitude: req.body.latitude,
@@ -58,10 +59,11 @@ exports.create_a_place = function (req, res) {
   con.query("INSERT INTO places (name, description, latitude, longitude, user_id) VALUES" + 
   "('" + newPlace.name + "', '" + newPlace.description + "', " 
   + newPlace.latitude + ", " + newPlace.longitude
-  + ", " + newPlace.user_id + ")", function (err, place, fields) {
+  + ", " + newPlace.user_id + ")", function (err, result) {
     if (err) {
       res.send(createAnswer(null, err.message, 500));
     } else {
+      newPlace._id = result.insertId;
       res.json(createAnswer(newPlace, 'OK', 201));
     }
   });
@@ -96,6 +98,7 @@ exports.update_a_place = function (req, res) {
         var thisUserId = (typeof req.body.user_id === 'undefined') ? place2[0].user_id : req.body.user_id;
 
         var updatedPlace = {
+          _id: req.params.id,
           name: thisName,
           description: thisDescription,
           latitude: thisLatitude,
@@ -109,7 +112,7 @@ exports.update_a_place = function (req, res) {
         + "longitude = " + thisLongitude + ", "
         + "user_id = " + thisUserId 
         + " WHERE _id = " + req.params.id + " LIMIT 1"
-        , function (err, place, fields) {
+        , function (err, result) {
           if (err) {
             res.send(createAnswer(null, err.message, 500));
           } else {
