@@ -17,7 +17,7 @@ var express = require('express'),
     if (err) throw err;
     else {
       console.log("Connected!");
-      var sql = "CREATE TABLE IF NOT EXISTS places (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), description VARCHAR(255), latitude DOUBLE(20, 15), longitude DOUBLE(20, 15), user_id INT(10))";
+      var sql = "CREATE TABLE IF NOT EXISTS places (_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), description VARCHAR(255), latitude DOUBLE(20, 15), longitude DOUBLE(20, 15), user_id INT(10))";
       con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Table created");

@@ -68,7 +68,7 @@ exports.create_a_place = function (req, res) {
 };
 
 exports.read_a_place = function (req, res) {
-  con.query("SELECT * FROM places WHERE id = " + req.params.id + " LIMIT 1", function (err, place, fields) {
+  con.query("SELECT * FROM places WHERE _id = " + req.params.id + " LIMIT 1", function (err, place, fields) {
     if (err) {
       res.send(createAnswer(null, err.message, 500));
     } else {
@@ -82,7 +82,7 @@ exports.read_a_place = function (req, res) {
 };
 
 exports.update_a_place = function (req, res) {
-  con.query("SELECT * FROM places WHERE id = " + req.params.id, function (err2, place2, fields2) {
+  con.query("SELECT * FROM places WHERE _id = " + req.params.id, function (err2, place2, fields2) {
     if (err2) {
       res.send(createAnswer(null, err.message, 500));
     } else {
@@ -108,7 +108,7 @@ exports.update_a_place = function (req, res) {
         + "latitude = " + thisLatitude + ", "
         + "longitude = " + thisLongitude + ", "
         + "user_id = " + thisUserId 
-        + " WHERE id = " + req.params.id + " LIMIT 1"
+        + " WHERE _id = " + req.params.id + " LIMIT 1"
         , function (err, place, fields) {
           if (err) {
             res.send(createAnswer(null, err.message, 500));
@@ -122,11 +122,11 @@ exports.update_a_place = function (req, res) {
 };
 
 exports.delete_a_place = function (req, res) {
-  con.query("SELECT * FROM places WHERE id = " + req.params.id, function (err2, place2, fields2) {
+  con.query("SELECT * FROM places WHERE _id = " + req.params.id, function (err2, place2, fields2) {
     if (err2) {
       res2.send(createAnswer(null, err2.message, 500));
     } else {
-      con.query("DELETE FROM places WHERE id = " + req.params.id + " LIMIT 1", function (err, place, fields) {
+      con.query("DELETE FROM places WHERE _id = " + req.params.id + " LIMIT 1", function (err, place, fields) {
         if (err) {
           res.send(createAnswer(null, err.message, 500));
         } else {
